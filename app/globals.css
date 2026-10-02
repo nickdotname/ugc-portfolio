@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #c8c8c4;
+  --ink: #111111;
+  --ghost: #f2f2ee;
+  --muted: #5a5a57;
+  --signal: #ff3b00;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ghost: var(--ghost);
+  --color-muted: var(--muted);
+  --color-signal: var(--signal);
+  --font-display: var(--font-inter-tight), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono), monospace;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--ghost);
+}
+
+/* Grain overlay: SVG turbulence noise, fixed over the whole viewport. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+}
+
+.grain-overlay svg {
+  width: 100%;
+  height: 100%;
+}
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+}
+
+.mono {
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
