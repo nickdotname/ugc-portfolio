@@ -20,7 +20,12 @@ export default function VideoTile({
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const tileRef = useRef<HTMLButtonElement>(null);
-  const hasPlayableLoop = Boolean(video.previewLoopId);
+  const loopSrc = video.previewLoopId
+    ? streamHlsUrl(video.previewLoopId)
+    : video.localLoopSrc;
+  const hasPlayableLoop = Boolean(loopSrc);
+  const posterSrc =
+    video.poster || (video.streamId ? streamThumbnailUrl(video.streamId) : undefined);
 
   useEffect(() => {
     const el = videoRef.current;
@@ -69,8 +74,8 @@ export default function VideoTile({
             className={`h-full w-full object-cover transition-[filter] duration-500 ${
               hovered ? "grayscale-0" : "grayscale"
             }`}
-            src={streamHlsUrl(video.previewLoopId)}
-            poster={video.poster || streamThumbnailUrl(video.streamId)}
+            src={loopSrc}
+            poster={posterSrc}
             muted
             loop
             playsInline

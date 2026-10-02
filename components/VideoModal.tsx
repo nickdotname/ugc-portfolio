@@ -25,6 +25,10 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
 
   if (!video) return null;
 
+  const fullSrc = video.streamId ? streamHlsUrl(video.streamId) : video.localSrc;
+  const posterSrc =
+    video.poster || (video.streamId ? streamThumbnailUrl(video.streamId) : undefined);
+
   return (
     <div
       className="fixed inset-0 z-[60] bg-ink/95 flex items-center justify-center p-4 sm:p-10"
@@ -43,11 +47,11 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative aspect-[9/16] h-[70vh] bg-black">
-          {video.streamId ? (
+          {fullSrc ? (
             <video
               className="h-full w-full object-contain"
-              src={streamHlsUrl(video.streamId)}
-              poster={video.poster || streamThumbnailUrl(video.streamId)}
+              src={fullSrc}
+              poster={posterSrc}
               controls
               autoPlay
               playsInline

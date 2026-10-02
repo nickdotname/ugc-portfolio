@@ -19,9 +19,16 @@ export type Video = {
   category: VideoCategory;
   platform: string;
   liveUrl: string;
+  /** Cloudflare Stream UID. Leave blank while hosting locally via localSrc/localLoopSrc. */
   streamId: string;
+  /** Cloudflare Stream UID for the muted hover loop. */
   previewLoopId: string;
+  /** Poster image: an absolute Stream thumbnail URL, or a /public-relative path. */
   poster: string;
+  /** Full clip served from /public, used when streamId is blank. */
+  localSrc?: string;
+  /** Muted hover loop served from /public, used when previewLoopId is blank. */
+  localLoopSrc?: string;
   stats: VideoStats;
   featured: boolean;
   date: string;
