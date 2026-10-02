@@ -6,17 +6,11 @@ import { buildCaption, streamHlsUrl, streamThumbnailUrl } from "@/content/types"
 
 type VideoTileProps = {
   video: Video;
-  highlighted?: boolean;
   onOpen: (video: Video) => void;
-  onHoverChange?: (slug: string | null) => void;
+  caption?: boolean;
 };
 
-export default function VideoTile({
-  video,
-  highlighted = false,
-  onOpen,
-  onHoverChange,
-}: VideoTileProps) {
+export default function VideoTile({ video, onOpen, caption = true }: VideoTileProps) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const tileRef = useRef<HTMLButtonElement>(null);
@@ -56,17 +50,9 @@ export default function VideoTile({
         ref={tileRef}
         type="button"
         onClick={() => onOpen(video)}
-        onMouseEnter={() => {
-          setHovered(true);
-          onHoverChange?.(video.slug);
-        }}
-        onMouseLeave={() => {
-          setHovered(false);
-          onHoverChange?.(null);
-        }}
-        className={`relative aspect-[9/16] w-full bg-ink block text-left outline outline-2 outline-offset-2 transition-colors ${
-          highlighted ? "outline-signal" : "outline-transparent"
-        }`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="relative aspect-[9/16] w-full bg-ink block text-left"
       >
         {hasPlayableLoop ? (
           <video
@@ -87,9 +73,11 @@ export default function VideoTile({
           </div>
         )}
       </button>
-      <p className="mono text-[10px] sm:text-[11px] mt-2 text-muted">
-        {buildCaption(video)}
-      </p>
+      {caption && (
+        <p className="mono text-[10px] sm:text-[11px] mt-2 text-muted">
+          {buildCaption(video)}
+        </p>
+      )}
     </div>
   );
 }

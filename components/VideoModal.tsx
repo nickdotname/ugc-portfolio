@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import type { Video } from "@/content/types";
-import { buildCaption, streamHlsUrl, streamThumbnailUrl } from "@/content/types";
+import { streamHlsUrl, streamThumbnailUrl } from "@/content/types";
 
 type VideoModalProps = {
   video: Video | null;
@@ -64,19 +64,16 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
           )}
         </div>
 
-        <div className="flex items-center justify-between w-full max-w-[400px] mono text-[11px] text-ghost">
-          <span>{buildCaption(video)}</span>
-          {video.liveUrl && (
-            <a
-              href={video.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4 hover:text-signal transition-colors"
-            >
-              VIEW LIVE ↗
-            </a>
-          )}
-        </div>
+        {video.liveUrl && (
+          <a
+            href={video.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mono text-[11px] text-ghost underline underline-offset-4 hover:text-signal transition-colors"
+          >
+            VIEW LIVE ↗
+          </a>
+        )}
       </div>
     </div>
   );
